@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Modern Site</title>
+  <style>
+    :root {
+      --bg:#0f1724;
+      --card:#0b1220;
+      --muted:#9aa4b2;
+      --accent:#6ee7b7;
+      --accent-2:#60a5fa;
+      --glass: rgba(255,255,255,0.04);
+      --radius: 12px;
+      font-family: Inter, system-ui, sans-serif;
+    }
+    body {
+      margin:0;
+      background: linear-gradient(180deg,#071023 0%, #071028 60%);
+      color:#e6eef6;
+    }
+    .wrap{max-width:1100px;margin:auto;padding:2rem}
+    header,footer{padding:1rem 2rem}
+    .btn{
+      display:inline-flex;align-items:center;gap:.6rem;
+      padding:.65rem 1rem;border-radius:10px;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:#04202b;font-weight:700;border:0;cursor:pointer;text-decoration:none;
+    }
+    .card{
+      background:var(--card);
+      padding:1.25rem;
+      border-radius:var(--radius);
+      box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+    }
+    .muted{color:var(--muted)}
+    input[type=text]{
+      padding:.6rem;border-radius:8px;border:none;width:100%;margin-top:.5rem;font-size:1rem;
+    }
+    #result{
+      margin-top:1rem;font-weight:bold;
+    }
+  </style>
+</head>
+<body>
+
+<header class="wrap">
+  <h1>My Superhero Guessing Website</h1>
+</header>
+
+<main class="wrap">
+
+  <section class="card" id="guess-game">
+    <h2>🦸 Guess the Superhero</h2>
+    <p id="dialogue" style="font-size:1.2rem;margin:1rem 0;"></p>
+
+    <input type="text" id="guess" placeholder="Type your superhero name..." />
+    <div style="margin-top:1rem;">
+      <button class="btn" onclick="checkGuess()">Submit Guess</button>
+      <button class="btn" style="background:var(--glass);color:#fff;" onclick="newQuote()">New Quote</button>
+    </div>
+    <p id="result"></p>
+  </section>
+
+</main>
+
+<footer class="wrap muted">
+  <p>© <span id="year"></span> MySite | Built with HTML, CSS & JavaScript</p>
+</footer>
+
+<script>
+  // current year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // dialogues and heroes
+  const dialogues = {
+    "Fear is a tool": "Batman",
+    "With great power must come great responsibility": "Spiderman",
+    "I love you 3000": "Ironman",
+    "This is the symbol of HOPE": "Superman"
+  };
+
+  let currentHero = "";
+
+  // pick random dialogue
+  function newQuote() {
+    const entries = Object.entries(dialogues);
+    const random = entries[Math.floor(Math.random() * entries.length)];
+    document.getElementById("dialogue").textContent = `"${random[0]}"`;
+    currentHero = random[1];
+    document.getElementById("guess").value = "";
+    document.getElementById("result").textContent = "";
+  }
+
+  // check answer
+  function checkGuess() {
+    const userGuess = document.getElementById("guess").value.trim().toLowerCase();
+    const correct = currentHero.toLowerCase();
+    const result = document.getElementById("result");
+
+    if (!userGuess) {
+      result.textContent = "Please enter a name!";
+      result.style.color = "orange";
+      return;
+    }
+
+    if (userGuess === correct) {
+      result.textContent = `✅ Correct! It's ${currentHero}.`;
+      result.style.color = "lightgreen";
+    } else {
+      result.textContent = `❌ Nope! It was ${currentHero}.`;
+      result.style.color = "red";
+    }
+  }
+
+  // start with a random quote
+  newQuote();
+</script>
+
+</body>
+</html>
