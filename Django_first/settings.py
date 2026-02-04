@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+#ALso don't forget to make my.env (environment) seprately for environment specific details
 from pathlib import Path
 import os
 
